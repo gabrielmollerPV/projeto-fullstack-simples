@@ -251,12 +251,14 @@ exports.getPerfil = (req, res) => {
             usuarios.id,
             usuarios.nome,
             usuarios.email,
+            usuarios.foto,
             bairros.nome_bairro
         FROM usuarios
         INNER JOIN bairros
         ON bairros.id_bairro = usuarios.bairro_id
         WHERE usuarios.id = ?
     `;
+        
 
     db.query(sql, [id], (err, result) => {
 
@@ -268,4 +270,21 @@ exports.getPerfil = (req, res) => {
 
     });
 
+    const[result] = await.db.query(sql,[id]);
+        
+        if(result[0].foto) {
+            result[0].foto = result[0].foto.toString('base64');
+        }
+        return result[0];
+};
+
+exports.getBairros = (req, res) => {
+    const sql = `SELECT * FROM bairros`;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+        res.json(result);
+    });
 };

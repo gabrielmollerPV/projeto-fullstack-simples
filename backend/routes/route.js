@@ -46,5 +46,11 @@ router.get(
     "/perfil/:id",
     controller.getPerfil
 );
+router.get(
+    "/bairros", 
+    controller.getBairros
+);
+
+
 
 module.exports = router;
