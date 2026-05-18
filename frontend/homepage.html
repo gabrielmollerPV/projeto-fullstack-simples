@@ -7,66 +7,167 @@
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-
     <div class="container-app">
         <aside class="aside-painel">
-            <div id="wrapper-autenticacao-dinamica" class="wrapper-login"></div>
-            <div class="aside-mock-footer">
-                <div class="mock-footer-titulo">FalaFloripa</div>
-                <div class="mock-footer-icones">
-                    <div class="mock-circulo"></div>
-                    <div class="mock-circulo"></div>
-                    <div class="mock-circulo"></div>
+            <div class="marca-sistema">
+                <img src="imgs/progresso.svg" alt="Fala Floripa" class="marca-logo">
+                <div>
+                    <span class="marca-subtitulo">Rede de conversa</span>
+                    <h1>Fala Floripa</h1>
                 </div>
-                <div class="mock-footer-sub">copyrights</div>
             </div>
+
+            <div id="wrapper-autenticacao" class="wrapper-login"></div>
         </aside>
 
         <main class="principal-conteudo">
-            <nav class="nav-filtros-barra">
-                <ul id="elemento-filtros-bairros" class="lista-filtros"></ul>
+            <header class="cabecalho-feed">
+                <div>
+                    <span class="secao-label">Ações da comunidade</span>
+                    <h2>Publicações por bairro</h2>
+                </div>
+                <button id="btn-atualizar" class="btn-icone-texto" type="button">
+                    <span aria-hidden="true">↻</span>
+                    Atualizar
+                </button>
+            </header>
+
+            <nav class="nav-filtros-barra" aria-label="Filtros por bairro">
+                <div id="lista-filtros-bairros" class="lista-filtros"></div>
             </nav>
 
-            <div id="container-feed-real" class="feed-scroll-container"></div>
-
-            <div class="input-falso-criar-post" onclick="verificarPermissaoAcao()">
-                digitar algo
-            </div>
+            <section id="feed-publicacoes" class="feed-scroll-container" aria-live="polite"></section>
 
             <div class="barra-paginacao-container">
-                <button id="btn-pag-anterior" class="btn-paginacao-style" onclick="mudarPagina(-1)">Anterior</button>
+                <button id="btn-pag-anterior" class="btn-paginacao-style" type="button">Anterior</button>
                 <span id="indicador-pagina" class="pagina-em-destaque">1</span>
-                <button id="btn-pag-proximo" class="btn-paginacao-style" onclick="mudarPagina(1)">Próximo</button>
+                <button id="btn-pag-proximo" class="btn-paginacao-style" type="button">Próximo</button>
             </div>
         </main>
     </div>
 
     <footer class="rodape-geral-sistema">
-        FalaFloripa | Instagram.svg | Twitter.svg | Tik Tok.svg | <strong>Copyright - 04/05/2026</strong>
+        <span>Fala Floripa</span>
+        <img src="imgs/instagram.svg" alt="Instagram">
+        <img src="imgs/twitter.svg" alt="Twitter">
+        <img src="imgs/tiktok.svg" alt="TikTok">
+        <strong>Copyright - 04/05/2026</strong>
     </footer>
 
-    <div id="modal-login-sistema" class="modal-overlay">
+    <div id="modal-login" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-login">
         <div class="modal-janela">
-            <div class="modal-fechar-x" onclick="fecharModalLogin()">x.svg</div>
-            <h3 class="modal-titulo">Identifique-se</h3>
-            <div id="texto-erro-modal" class="mensagem-erro-alerta"></div>
-            
-            <div class="grupo-input">
-                <label>E-mail</label>
-                <input type="email" id="login-input-email">
-            </div>
-            <div class="grupo-input">
-                <label>Senha</label>
-                <input type="password" id="login-input-senha">
-            </div>
-
-            <div class="botoes-modal-linha">
-                <button class="btn-cancelar-modal" onclick="fecharModalLogin()">Cancelar</button>
-                <button class="btn-login-modal" onclick="processarLoginFront()">Login</button>
-            </div>
+            <button class="modal-fechar-botao" type="button" data-action="fechar-login" aria-label="Fechar login">
+                <img src="imgs/x.svg" alt="">
+            </button>
+            <h3 id="titulo-login" class="modal-titulo">Identifique-se</h3>
+            <form id="form-login" novalidate>
+                <div id="mensagem-erro" class="mensagem-erro-alerta"></div>
+                <div class="grupo-input">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" autocomplete="email">
+                </div>
+                <div class="grupo-input">
+                    <label for="login-senha">Senha</label>
+                    <input type="password" id="login-senha" autocomplete="current-password">
+                </div>
+                <div class="botoes-modal-linha">
+                    <button class="btn-cancelar-modal" type="button" data-action="fechar-login">Cancelar</button>
+                    <button class="btn-login-modal" type="submit">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <script src="homepage.js" defer></script>
+    <div id="modal-cadastro" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-cadastro">
+        <div class="modal-janela modal-janela-grande">
+            <button class="modal-fechar-botao" type="button" data-action="fechar-cadastro" aria-label="Fechar cadastro">
+                <img src="imgs/x.svg" alt="">
+            </button>
+            <h3 id="titulo-cadastro" class="modal-titulo">Criar Conta</h3>
+            <form id="form-cadastro" novalidate>
+                <div id="mensagem-erro-cadastro" class="mensagem-erro-alerta"></div>
+                <div class="grupo-input">
+                    <label for="cad-nome">Nome</label>
+                    <input type="text" id="cad-nome" autocomplete="name">
+                </div>
+                <div class="grupo-input">
+                    <label for="cad-email">E-mail</label>
+                    <input type="email" id="cad-email" autocomplete="email">
+                </div>
+                <div class="grupo-input">
+                    <label for="cad-senha">Senha</label>
+                    <input type="password" id="cad-senha" autocomplete="new-password" minlength="4">
+                </div>
+                <div class="grupo-input">
+                    <label for="cad-bairro">Bairro</label>
+                    <select id="cad-bairro" class="select-estilizado"></select>
+                </div>
+                <div class="grupo-input">
+                    <label for="cad-foto">Foto de Perfil</label>
+                    <input type="file" id="cad-foto" accept="image/*">
+                </div>
+                <div class="botoes-modal-linha">
+                    <button class="btn-cancelar-modal" type="button" data-action="fechar-cadastro">Cancelar</button>
+                    <button class="btn-login-modal" type="submit">Registrar-se</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-postagem" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="titulo-postagem">
+        <div class="modal-janela modal-janela-grande">
+            <button class="modal-fechar-botao" type="button" data-action="fechar-postagem" aria-label="Fechar postagem">
+                <img src="imgs/x.svg" alt="">
+            </button>
+            <h3 id="titulo-postagem" class="modal-titulo">Registre sua ação</h3>
+            <form id="form-postagem" novalidate>
+                <div id="mensagem-erro-postagem" class="mensagem-erro-alerta"></div>
+                <div class="grupo-input">
+                    <label for="post-titulo">Título</label>
+                    <input type="text" id="post-titulo" maxlength="80">
+                </div>
+                <div class="grupo-input">
+                    <label for="post-bairro">Bairro</label>
+                    <select id="post-bairro" class="select-estilizado"></select>
+                </div>
+                <div class="grupo-input">
+                    <label for="post-info-a">Descrição</label>
+                    <textarea id="post-info-a" rows="4" maxlength="600"></textarea>
+                </div>
+                <div class="grupo-input">
+                    <label for="post-info-b">Contato</label>
+                    <input type="tel" id="post-info-b" maxlength="32" placeholder="+55 (48) 99999-9999">
+                </div>
+                <div class="grupo-input">
+                    <label for="post-info-c">Status</label>
+                    <select id="post-info-c" class="select-estilizado">
+                        <option value="Aberto">Aberto</option>
+                        <option value="Em análise">Em análise</option>
+                        <option value="Prioridade alta">Prioridade alta</option>
+                        <option value="Resolvido">Resolvido</option>
+                    </select>
+                </div>
+                <div class="grupo-input">
+                    <label for="post-imagem">Imagem da postagem</label>
+                    <input type="file" id="post-imagem" accept="image/*">
+                </div>
+                <div class="botoes-modal-linha">
+                    <button class="btn-cancelar-modal" type="button" data-action="fechar-postagem">Cancelar</button>
+                    <button class="btn-login-modal" type="submit">Registrar Ação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-imagem" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Visualização da imagem">
+        <div class="modal-imagem-janela">
+            <button class="modal-fechar-botao" type="button" data-action="fechar-imagem" aria-label="Fechar imagem">
+                <img src="imgs/x.svg" alt="">
+            </button>
+            <img id="imagem-ampliada" alt="">
+        </div>
+    </div>
+
+    <script src="homepage.js"></script>
 </body>
 </html>

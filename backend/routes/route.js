@@ -1,56 +1,28 @@
 const express = require("express");
-const router = express.Router();
-
 const multer = require("multer");
-
-const storage = multer.memoryStorage();
-
-const upload = multer({
-    storage: storage
-});
-
 const controller = require("../controllers/controller");
 
-router.post(
-    "/register",
-    upload.single("foto"),
-    controller.register
-);
+const router = express.Router();
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 4 * 1024 * 1024
+    }
+});
 
-router.post(
-    "/login",
-    controller.login
-);
+router.post("/register", upload.single("foto"), controller.register);
+router.post("/login", controller.login);
 
-router.get(
-    "/publicacoes",
-    controller.getPublicacoes
-);
+router.get("/bairros", controller.getBairros);
+router.get("/publicacoes", controller.getPublicacoes);
+router.post("/publicacoes", upload.single("imagem"), controller.criarPublicacao);
 
-router.post(
-    "/publicacoes",
-    controller.criarPublicacao
-);
+router.get("/publicacoes/:id/comentarios", controller.getComentarios);
+router.post("/comentarios", controller.criarComentario);
 
-router.post(
-    "/comentarios",
-    controller.criarComentario
-);
+router.post("/curtir/:id", controller.curtirPublicacao);
+router.post("/publicacoes/:id/curtir", controller.curtirPublicacao);
 
-router.post(
-    "/curtir/:id",
-    controller.curtirPublicacao
-);
-
-router.get(
-    "/perfil/:id",
-    controller.getPerfil
-);
-router.get(
-    "/bairros", 
-    controller.getBairros
-);
-
-
+router.get("/perfil/:id", controller.getPerfil);
 
 module.exports = router;
