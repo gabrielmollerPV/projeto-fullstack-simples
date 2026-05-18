@@ -16,7 +16,7 @@ pool.getConnection((err, connection) => {
         return;
     }
 
-    console.log("MySQL Pool conectado.");
+    console.log("Pool conectado.");
     connection.release();
 });
 

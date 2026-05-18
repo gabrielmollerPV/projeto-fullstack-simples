@@ -1,16 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FalaFloripa</title>
+    <title>Fala Floripa - Home</title>
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li></li>
-        </ul>
-    </nav>
+
+    <div class="container-app">
+        <aside class="aside-painel">
+            <div id="wrapper-autenticacao-dinamica" class="wrapper-login"></div>
+            <div class="aside-mock-footer">
+                <div class="mock-footer-titulo">FalaFloripa</div>
+                <div class="mock-footer-icones">
+                    <div class="mock-circulo"></div>
+                    <div class="mock-circulo"></div>
+                    <div class="mock-circulo"></div>
+                </div>
+                <div class="mock-footer-sub">copyrights</div>
+            </div>
+        </aside>
+
+        <main class="principal-conteudo">
+            <nav class="nav-filtros-barra">
+                <ul id="elemento-filtros-bairros" class="lista-filtros"></ul>
+            </nav>
+
+            <div id="container-feed-real" class="feed-scroll-container"></div>
+
+            <div class="input-falso-criar-post" onclick="verificarPermissaoAcao()">
+                digitar algo
+            </div>
+
+            <div class="barra-paginacao-container">
+                <button id="btn-pag-anterior" class="btn-paginacao-style" onclick="mudarPagina(-1)">Anterior</button>
+                <span id="indicador-pagina" class="pagina-em-destaque">1</span>
+                <button id="btn-pag-proximo" class="btn-paginacao-style" onclick="mudarPagina(1)">Próximo</button>
+            </div>
+        </main>
+    </div>
+
+    <footer class="rodape-geral-sistema">
+        FalaFloripa | Instagram.svg | Twitter.svg | Tik Tok.svg | <strong>Copyright - 04/05/2026</strong>
+    </footer>
+
+    <div id="modal-login-sistema" class="modal-overlay">
+        <div class="modal-janela">
+            <div class="modal-fechar-x" onclick="fecharModalLogin()">x.svg</div>
+            <h3 class="modal-titulo">Identifique-se</h3>
+            <div id="texto-erro-modal" class="mensagem-erro-alerta"></div>
+            
+            <div class="grupo-input">
+                <label>E-mail</label>
+                <input type="email" id="login-input-email">
+            </div>
+            <div class="grupo-input">
+                <label>Senha</label>
+                <input type="password" id="login-input-senha">
+            </div>
+
+            <div class="botoes-modal-linha">
+                <button class="btn-cancelar-modal" onclick="fecharModalLogin()">Cancelar</button>
+                <button class="btn-login-modal" onclick="processarLoginFront()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="homepage.js" defer></script>
 </body>
 </html>
